@@ -1,9 +1,9 @@
 module Receipts
   class Base < Prawn::Document
-    attr_accessor :title, :company
+    attr_accessor :title, :subtitle, :company
 
     class << self
-      attr_reader :title
+      attr_reader :title, :subtitle
     end
 
     def initialize(attributes = {})
@@ -11,6 +11,7 @@ module Receipts
       setup_fonts attributes.fetch(:font, Receipts.default_font)
 
       @title = attributes.fetch(:title, self.class.title)
+      @subtitle = attributes.fetch(:subtitle, self.class.subtitle)
 
       generate_from(attributes)
     end
@@ -43,17 +44,24 @@ module Receipts
       end
     end
 
-    def header(company: {}, height: 16)
+    def header(company: {}, height: 48)
       logo = company[:logo]
 
-      if logo.nil?
-        text company.fetch(:name), align: :right, style: :bold, size: 16, color: "4b5563"
-      else
-        image load_image(logo), height: height, position: :right
+      define_grid(columns: 5, rows: 1, gutter: 10)
+
+      grid(1, 1).bounding_box do
+        if logo.nil?
+          text company.fetch(:name), align: :right, style: :bold, size: 16, color: "4b5563"
+        else
+          image load_image(logo), width: 36, position: :left
+        end
       end
 
-      move_up height
-      text title, style: :bold, size: 16
+      grid(2, 1).bounding_box do
+        # move_up height
+        text title, style: :bold, size: 16
+        text subtitle, style: :bold, size: 14
+      end
     end
 
     def render_details(details, margin_top: 16)
