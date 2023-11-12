@@ -53,7 +53,7 @@ module Receipts
         if logo.nil?
           text company.fetch(:name), align: :right, style: :bold, size: 16, color: "4b5563"
         else
-          image load_image(logo), width: 36, position: :left
+          image load_image(logo), width: 24, position: :left
         end
       end
 
@@ -72,7 +72,7 @@ module Receipts
       table(details, cell_style: {borders: [], inline_format: true, padding: [0, 8, 2, 0]})
     end
 
-    def render_billing_details(company:, margin_top: 16)
+    def render_billing_details(company:, margin_top: 4)
       company_details = [
         company[:address],
         company[:phone],
@@ -87,7 +87,7 @@ module Receipts
       table(line_items, width: bounds.width, cell_style: {borders: [], inline_format: true, overflow: :expand})
     end
 
-    def render_shipping_details(recipient:, margin_top: 16)
+    def render_shipping_details(recipient:, margin_top: 8)
       move_down margin_top
 
       line_items = [
@@ -98,7 +98,7 @@ module Receipts
       table(line_items, width: bounds.width, cell_style: {borders: [], inline_format: true, overflow: :expand})
     end
 
-    def render_line_items(line_items, margin_top: 30)
+    def render_line_items(line_items, margin_top: 16)
       move_down margin_top
 
       borders = line_items.length - 2
