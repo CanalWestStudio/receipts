@@ -49,7 +49,7 @@ module Receipts
 
       define_grid(columns: 5, rows: 1, gutter: 10)
 
-      grid(1, 1).bounding_box do
+      grid(0, 0).bounding_box do
         if logo.nil?
           text company.fetch(:name), align: :right, style: :bold, size: 16, color: "4b5563"
         else
@@ -57,7 +57,7 @@ module Receipts
         end
       end
 
-      grid(2, 1).bounding_box do
+      grid([0, 1], [0, 5]).bounding_box do
         # move_up height
         text title, style: :bold, size: 16
         text subtitle, style: :bold, size: 14
