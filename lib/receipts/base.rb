@@ -69,7 +69,7 @@ module Receipts
 
     def render_details(details, margin_top: 16)
       move_down margin_top
-      table(details, cell_style: {borders: [], inline_format: true, padding: [0, 16, 2, 0]})
+      table(details, cell_style: {borders: [], inline_format: true, padding: [0, 24, 2, 0]})
     end
 
     def render_billing_details(company:, margin_top: 4)
@@ -87,12 +87,12 @@ module Receipts
       table(line_items, width: bounds.width, cell_style: {borders: [], inline_format: true, overflow: :expand})
     end
 
-    def render_shipping_details(recipient:, margin_top: 8)
+    def render_shipping_details(recipient:, margin_top: 16)
       move_down margin_top
 
       line_items = [
         [
-          {content: Array(recipient).join("\n"), padding: [0, 12, 0, 0]}
+          {content: "<b>Ship to</b>\n#{Array(recipient).join('\n')}", padding: [0, 12, 0, 0]}
         ]
       ]
       table(line_items, width: bounds.width, cell_style: {borders: [], inline_format: true, overflow: :expand})
