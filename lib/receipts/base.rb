@@ -19,7 +19,7 @@ module Receipts
     def generate_from(attributes)
       return if attributes.empty?
 
-      define_grid(columns: 5, rows: 10, gutter: 10)
+      define_grid(columns: 10, rows: 10, gutter: 10)
 
       company = attributes.fetch(:company)
       header company: company, height: attributes.fetch(:logo_height, 16)
@@ -51,20 +51,20 @@ module Receipts
 
       grid(0, 0).bounding_box do
         if logo.nil?
-          text company.fetch(:name), align: :right, style: :bold, size: 16, color: "4b5563"
+          text company.fetch(:name), align: :right, style: :normal, size: 16, color: "4b5563"
         else
-          image load_image(logo), width: 24, position: :left
+          image load_image(logo), width: 48, position: :left
         end
       end
 
-      grid([0, 1], [0, 5]).bounding_box do
+      grid([0, 1], [0, 10]).bounding_box do
         render_billing_details company: company
       end
         
       # move_up height
 
-      text title, style: :bold, size: 16
-      text subtitle, style: :bold, size: 14
+      text title, style: :normal, size: 16
+      text subtitle, style: :normal, size: 14
     end
 
     def render_details(details, margin_top: 16)
