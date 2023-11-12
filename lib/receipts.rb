@@ -7,6 +7,7 @@ module Receipts
   autoload :Base, "receipts/base"
   autoload :Invoice, "receipts/invoice"
   autoload :Receipt, "receipts/receipt"
+  autoload :PackingSlip, "receipts/packing_slip"
   autoload :Statement, "receipts/statement"
 
   @@default_font = nil
