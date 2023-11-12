@@ -92,7 +92,7 @@ module Receipts
 
       line_items = [
         [
-          {content: "<b>Ship to</b>\n#{Array(recipient).join('\n')}", padding: [0, 12, 0, 0]}
+          {content: Array(recipient).join("\n"), padding: [0, 12, 0, 0]}
         ]
       ]
       table(line_items, width: bounds.width, cell_style: {borders: [], inline_format: true, overflow: :expand})
