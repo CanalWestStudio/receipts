@@ -72,7 +72,7 @@ module Receipts
       table(details, cell_style: {borders: [], inline_format: true, padding: [0, 8, 2, 0]})
     end
 
-    def render_billing_details(company:, margin_top: 4)
+    def render_billing_details(company:, margin_top: 4, margin_left: 4)
       company_details = [
         company[:address],
         company[:phone],
