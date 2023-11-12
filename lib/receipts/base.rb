@@ -63,8 +63,8 @@ module Receipts
         
       # move_up height
 
-      text title, style: :normal, size: 16, leading: 2
-      text subtitle, style: :normal, size: 14, leading: 2
+      text title, style: :normal, size: 16, leading: 20
+      text subtitle, style: :normal, size: 14, leading: 20
     end
 
     def render_details(details, margin_top: 16)
@@ -81,7 +81,7 @@ module Receipts
 
       line_items = [
         [
-          {content: "<b>#{company.fetch(:name)}</b>\n#{company_details}", leading: 2, padding: [0, 12, 0, 12]}
+          {content: "<b>#{company.fetch(:name)}</b>\n#{company_details}", padding: [0, 12, 0, 12]}
         ]
       ]
       table(line_items, width: bounds.width, cell_style: {borders: [], inline_format: true, overflow: :expand})
