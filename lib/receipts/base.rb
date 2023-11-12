@@ -22,7 +22,7 @@ module Receipts
       company = attributes.fetch(:company)
       header company: company, height: attributes.fetch(:logo_height, 16)
       render_details attributes.fetch(:details)
-      render_billing_details company: company, recipient: attributes.fetch(:recipient)
+      render_shipping_details recipient: attributes.fetch(:recipient)
       render_line_items attributes.fetch(:line_items)
       render_footer attributes.fetch(:footer, default_message(company: company))
     end
@@ -58,10 +58,14 @@ module Receipts
       end
 
       grid([0, 1], [0, 5]).bounding_box do
-        # move_up height
-        text title, style: :bold, size: 16
-        text subtitle, style: :bold, size: 14
+        render_billing_details company: company
       end
+        
+      move_up height
+
+      text title, style: :bold, size: 16
+      text subtitle, style: :bold, size: 14
+      
     end
 
     def render_details(details, margin_top: 16)
@@ -69,7 +73,7 @@ module Receipts
       table(details, cell_style: {borders: [], inline_format: true, padding: [0, 8, 2, 0]})
     end
 
-    def render_billing_details(company:, recipient:, margin_top: 16)
+    def render_billing_details(company:, margin_top: 16)
       move_down margin_top
 
       company_details = [
@@ -80,7 +84,17 @@ module Receipts
 
       line_items = [
         [
-          {content: "<b>#{company.fetch(:name)}</b>\n#{company_details}", padding: [0, 12, 0, 0]},
+          {content: "<b>#{company.fetch(:name)}</b>\n#{company_details}", padding: [0, 12, 0, 0]}
+        ]
+      ]
+      table(line_items, width: bounds.width, cell_style: {borders: [], inline_format: true, overflow: :expand})
+    end
+
+    def render_shipping_details(recipient:, margin_top: 16)
+      move_down margin_top
+
+      line_items = [
+        [
           {content: Array(recipient).join("\n"), padding: [0, 12, 0, 0]}
         ]
       ]
