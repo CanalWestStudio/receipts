@@ -61,11 +61,10 @@ module Receipts
         render_billing_details company: company
       end
         
-      move_up height
+      # move_up height
 
       text title, style: :bold, size: 16
       text subtitle, style: :bold, size: 14
-      
     end
 
     def render_details(details, margin_top: 16)
