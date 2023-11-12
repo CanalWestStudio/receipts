@@ -63,7 +63,7 @@ module Receipts
         
       # move_up height
 
-      text title, style: :normal, size: 16
+      text title, style: :normal, size: 16, padding: [0, 0, 2, 0]
       text subtitle, style: :normal, size: 14
     end
 
