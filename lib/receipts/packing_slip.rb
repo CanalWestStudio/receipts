@@ -1,5 +1,5 @@
 module Receipts
-  class PackingList < Base
+  class PackingSlip < Base
     @title = "Packing Slip"
   end
 end
