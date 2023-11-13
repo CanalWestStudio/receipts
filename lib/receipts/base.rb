@@ -92,6 +92,7 @@ module Receipts
 
       line_items = [
         [
+          {content: Array(recipient).join("\n"), padding: [0, 12, 2, 0]},
           {content: Array(recipient).join("\n"), padding: [0, 12, 2, 0]}
         ]
       ]
