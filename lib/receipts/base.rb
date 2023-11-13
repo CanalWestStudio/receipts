@@ -96,7 +96,7 @@ module Receipts
         ]
       ]
 
-      text "Ship to", leading: 2      
+      text "Ship to", style: :bold, leading: 2      
       table(line_items, width: bounds.width, cell_style: {borders: [], inline_format: true, overflow: :expand})
     end
 
