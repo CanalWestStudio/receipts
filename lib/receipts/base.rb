@@ -63,13 +63,13 @@ module Receipts
         
       # move_up height
 
-      text title, style: :normal, size: 16, leading: 20
-      text subtitle, style: :normal, size: 14, leading: 20
+      text title, style: :normal, size: 16, leading: 6
+      text subtitle, style: :normal, size: 14
     end
 
     def render_details(details, margin_top: 16)
       move_down margin_top
-      table(details, cell_style: {borders: [], inline_format: true, padding: [0, 24, 2, 0]})
+      table(details, cell_style: {borders: [], inline_format: true, padding: [0, 50, 2, 0]})
     end
 
     def render_billing_details(company:, margin_top: 4)
@@ -95,7 +95,7 @@ module Receipts
           {content: Array(recipient).join("\n"), padding: [0, 12, 0, 0]}
         ]
       ]
-      table(line_items, width: bounds.width, cell_style: {borders: [], inline_format: true, overflow: :expand})
+      table(line_items, width: bounds.width, cell_style: {borders: [], inline_format: true, padding: [0, 0, 2, 0], overflow: :expand})
     end
 
     def render_line_items(line_items, margin_top: 16)
