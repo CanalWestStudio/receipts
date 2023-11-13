@@ -19,8 +19,6 @@ module Receipts
     def generate_from(attributes)
       return if attributes.empty?
 
-      define_grid(columns: 10, rows: 10, gutter: 10)
-
       company = attributes.fetch(:company)
       header company: company, height: attributes.fetch(:logo_height, 16)
       render_details attributes.fetch(:details)
@@ -48,6 +46,8 @@ module Receipts
 
     def header(company: {}, height: 48)
       logo = company[:logo]
+
+      define_grid(columns: 10, rows: 1, gutter: 10)
 
       grid(0, 0).bounding_box do
         if logo.nil?
