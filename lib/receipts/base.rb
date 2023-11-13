@@ -63,13 +63,13 @@ module Receipts
         
       # move_up height
 
-      text title, style: :normal, size: 16, leading: 6
-      text subtitle, style: :normal, size: 14
+      text title, style: :normal, size: 16, leading: 4
+      text subtitle, style: :normal, size: 12
     end
 
     def render_details(details, margin_top: 16)
       move_down margin_top
-      table(details, cell_style: {borders: [], inline_format: true, padding: [0, 50, 2, 0]})
+      table(details, cell_style: {borders: [], inline_format: true, padding: [0, 48, 2, 0]})
     end
 
     def render_billing_details(company:, margin_top: 4)
@@ -81,7 +81,7 @@ module Receipts
 
       line_items = [
         [
-          {content: "<b>#{company.fetch(:name)}</b>\n#{company_details}", padding: [0, 12, 0, 12]}
+          {content: "<b>#{company.fetch(:name)}</b>\n#{company_details}", padding: [0, 12, 2, 12]}
         ]
       ]
       table(line_items, width: bounds.width, cell_style: {borders: [], inline_format: true, overflow: :expand})
@@ -92,10 +92,10 @@ module Receipts
 
       line_items = [
         [
-          {content: Array(recipient).join("\n"), padding: [0, 12, 0, 0]}
+          {content: Array(recipient).join("\n"), padding: [0, 12, 2, 0]}
         ]
       ]
-      table(line_items, width: bounds.width, cell_style: {borders: [], inline_format: true, padding: [0, 0, 2, 0], overflow: :expand})
+      table(line_items, width: bounds.width, cell_style: {borders: [], inline_format: true, overflow: :expand})
     end
 
     def render_line_items(line_items, margin_top: 16)
