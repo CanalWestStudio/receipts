@@ -108,7 +108,7 @@ module Receipts
         cells.padding = 6
         cells.borders = []
         
-        cell(-1).style(align: :center)
+        column(-1).style(align: :center)
 
         row(0..borders).borders = [:bottom]
       end
