@@ -23,12 +23,12 @@ module Receipts
 
       company ||= attributes.fetch(:company)
 
-      render_company company: company
+      render_company company: company unless company.nil?
       header
       render_details attributes.fetch(:details)
       render_shipping_details recipient: attributes.fetch(:recipient)
       render_line_items attributes.fetch(:line_items)
-      render_footer attributes.fetch(:footer, default_message(company: company))
+      render_footer
     end
 
     def setup_fonts(custom_font = nil)
