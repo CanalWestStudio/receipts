@@ -108,6 +108,7 @@ module Receipts
         cells.padding = 6
         cells.borders = []
         column(0).width = 320
+        column(-1).style :style_options => { :align => :right }
         row(0..borders).borders = [:bottom]
       end
     end
