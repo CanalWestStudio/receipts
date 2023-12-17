@@ -46,23 +46,23 @@ module Receipts
       end
     end
 
-    def header(company: {}, height:)
+    def header(company: {})
       logo = company[:logo]
 
-      grid(0, 0).bounding_box do
-        if logo.present?
+      if logo.present?
+        grid(0, 0).bounding_box do
           image load_image(logo), width: 36, position: :left
         end
       end
 
-      grid([0, 1], [0, 10]).bounding_box do
-        render_billing_details company: company
+      if company.present?
+        grid([0, 1], [0, 10]).bounding_box do
+          render_billing_details company: company
+        end
       end
-        
-      move_up height
 
       text title, style: :normal, size: 16, leading: 4
-      text subtitle, style: :normal, size: 12
+      text subtitle, style: :normal, size: 12 if subtitle.present?
     end
 
     def render_details(details, margin_top: 16)
