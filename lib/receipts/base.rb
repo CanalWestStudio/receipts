@@ -112,18 +112,24 @@ module Receipts
     end
 
     def render_footer(message, margin_top: 30)
-      
+      move_down 30
+
+      render_footer_stroke if message.present?
+
+      text message, inline_format: true
+    end
+
+    def render_footer_stroke
       margin_top
 
       stroke do
         line_width 1
-        stroke_color 'ff0000'
+        move_down 30
+        stroke_color '475569'
         stroke_horizontal_rule
       end
 
-      margin_top
-
-      text message, inline_format: true
+      move_down 30
     end
 
     def default_message
