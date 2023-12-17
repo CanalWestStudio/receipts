@@ -90,7 +90,7 @@ module Receipts
 
     def render_shipping_details(recipient:, margin_top: 16)
       margin_top
-      
+
       line_items = [
         [
           {content: Array(recipient).join("\n"), padding: [0, 12, 2, 0]}
@@ -112,7 +112,13 @@ module Receipts
     end
 
     def render_footer(message, margin_top: 30)
-      move_down margin_top
+      margin_top
+
+      stroke do
+        move_down 30
+        horizontal_rule
+      end
+
       text message, inline_format: true
     end
 
