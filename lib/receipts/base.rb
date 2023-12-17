@@ -107,7 +107,7 @@ module Receipts
       table(line_items, width: bounds.width, column_widths: {1 => 120}, cell_style: {border_color: "e5e5e5", inline_format: true, overflow: :expand}) do
         cells.padding = 6
         cells.borders = []
-        column(0).width = 120
+        column(0).width = 80
         row(0..borders).borders = [:bottom]
       end
     end
