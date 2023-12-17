@@ -46,7 +46,7 @@ module Receipts
       end
     end
 
-    def header(company: {})
+    def header(company: {}, height:)
       logo = company[:logo]
 
       if logo.present?
