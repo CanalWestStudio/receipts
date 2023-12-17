@@ -22,7 +22,9 @@ module Receipts
       define_grid(columns: 10, rows: 10, gutter: 10)
 
       company = attributes.fetch(:company)
-      header company: company
+
+      render_company company: company
+      header
       render_details attributes.fetch(:details)
       render_shipping_details recipient: attributes.fetch(:recipient)
       render_line_items attributes.fetch(:line_items)
@@ -46,21 +48,20 @@ module Receipts
       end
     end
 
-    def header(company: {})
+    def render_company(company: {})
       logo = company[:logo]
 
-      unless logo.nil?
-        grid(0, 0).bounding_box do
-          image load_image(logo), width: 36, position: :left
-        end
+      grid(0, 0).bounding_box do
+        image load_image(logo), width: 36, position: :left
       end
 
-      unless company.nil?
-        grid([0, 1], [0, 10]).bounding_box do
-          render_billing_details company: company
-        end
-      end
 
+      grid([0, 1], [0, 10]).bounding_box do
+        render_billing_details company: company
+      end
+    end
+
+    def header
       text title, style: :normal, size: 16, leading: 4
       text subtitle, style: :normal, size: 12 if subtitle.present?
     end
