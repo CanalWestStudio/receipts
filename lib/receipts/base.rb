@@ -112,7 +112,7 @@ module Receipts
     end
 
     def render_footer(message, margin_top: 30)
-      move_down 30
+      margin_top
 
       render_footer_stroke if message.present?
 
@@ -120,7 +120,7 @@ module Receipts
     end
 
     def render_footer_stroke
-      margin_top
+      move_down 30
 
       stroke do
         line_width 1
