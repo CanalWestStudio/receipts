@@ -26,7 +26,7 @@ module Receipts
 
       header
       render_details attributes.fetch(:details)
-      render_shipping_details attributes.fetch(:recipient)
+      render_shipping_details attributes.fetch(:recipients)
       render_line_items attributes.fetch(:line_items)
       render_footer attributes.fetch(:footer)
     end
@@ -88,10 +88,24 @@ module Receipts
       table(line_items, width: bounds.width, cell_style: {borders: [], inline_format: true, overflow: :expand})
     end
 
-    def render_shipping_details(recipient, margin_top: 16)
+    def render_shipping_details(recipients:, margin_top: 16)
       move_down margin_top
 
-      table(recipient, cell_style: {borders: [], inline_format: true, padding: [0, 48, 2, 0]})
+      recipients.each do |recipient|
+        grid([0, 1], [0, 3]).bounding_box do
+          render_shipping_details_line_item recipient: recipient
+        end
+      end
+    end
+
+    def render_shipping_details_line_item(recipient:)
+      line_items = [
+        [
+          {content: Array(recipient).join("\n"), padding: [0, 12, 2, 0]}
+        ]
+      ]
+     
+      table(line_items, cell_style: {borders: [], inline_format: true, padding: [0, 24, 2, 0]})
     end
 
     def render_line_items(line_items, margin_top: 16)
