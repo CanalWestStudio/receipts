@@ -46,12 +46,12 @@ module Receipts
       end
     end
 
-    def header(company: {})
+    def header(company: {}, height:)
       logo = company[:logo]
 
       grid(0, 0).bounding_box do
         if logo.present?
-          image load_image(logo), width: 48, position: :left
+          image load_image(logo), width: 36, position: :left
         end
       end
 
