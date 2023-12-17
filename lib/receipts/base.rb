@@ -112,12 +112,16 @@ module Receipts
     end
 
     def render_footer(message, margin_top: 30)
+      
       margin_top
 
       stroke do
-        move_down 30
-        horizontal_rule
+        line_width 1
+        stroke_color 'ff0000'
+        stroke_horizontal_rule
       end
+
+      margin_top
 
       text message, inline_format: true
     end
