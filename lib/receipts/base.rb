@@ -24,9 +24,11 @@ module Receipts
       company ||= attributes.fetch(:company)
       render_company(company: company) if company.present?
 
+      recipients = attributes.fetch(:recipients)
+      render_shipping_details(recipients: recipients) if recipients.any?
+
       header
       render_details attributes.fetch(:details)
-      render_shipping_details attributes.fetch(:recipients)
       render_line_items attributes.fetch(:line_items)
       render_footer attributes.fetch(:footer)
     end
@@ -88,12 +90,18 @@ module Receipts
       table(line_items, width: bounds.width, cell_style: {borders: [], inline_format: true, overflow: :expand})
     end
 
-    def render_shipping_details(recipients, margin_top: 16)
+    def render_shipping_details(recipients:, margin_top: 16)
       move_down margin_top
 
+      grid([0, 1], [0, 9]).bounding_box do
+        render_recipients
+      end
+    end
+
+    def render_recipients
       recipients.each do |recipient|
         grid([0, 1], [0, 3]).bounding_box do
-          render_shipping_details_line_item(recipient) if recipient.present?
+          render_shipping_details_line_item(recipient)
         end
       end
     end
