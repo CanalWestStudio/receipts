@@ -59,7 +59,7 @@ module Receipts
         render_billing_details company: company
       end
         
-      # move_up height
+      move_up height
 
       text title, style: :normal, size: 16, leading: 4
       text subtitle, style: :normal, size: 12
