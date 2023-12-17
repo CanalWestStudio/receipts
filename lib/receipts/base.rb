@@ -22,7 +22,7 @@ module Receipts
       define_grid(columns: 10, rows: 10, gutter: 10)
 
       company = attributes.fetch(:company)
-      header company: company, height: attributes.fetch(:logo_height, 16)
+      header company: company
       render_details attributes.fetch(:details)
       render_shipping_details recipient: attributes.fetch(:recipient)
       render_line_items attributes.fetch(:line_items)
