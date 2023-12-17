@@ -94,11 +94,11 @@ module Receipts
       move_down margin_top
 
       grid([0, 1], [0, 9]).bounding_box do
-        render_recipients
+        render_recipients recipients: recipients
       end
     end
 
-    def render_recipients
+    def render_recipients(recipients:)
       recipients.each do |recipient|
         grid([0, 1], [0, 3]).bounding_box do
           render_shipping_details_line_item(recipient)
