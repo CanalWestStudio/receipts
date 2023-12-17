@@ -89,8 +89,8 @@ module Receipts
     end
 
     def render_shipping_details(recipient:, margin_top: 16)
-      move_down margin_top
-
+      margin_top
+      
       line_items = [
         [
           {content: Array(recipient).join("\n"), padding: [0, 12, 2, 0]}
