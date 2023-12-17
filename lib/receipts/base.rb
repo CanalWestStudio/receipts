@@ -51,7 +51,7 @@ module Receipts
 
       grid(0, 0).bounding_box do
         if logo.present?
-          image load_image(logo), width: 48, height: 48, position: :left
+          image load_image(logo), width: 48, position: :left
         end
       end
 
