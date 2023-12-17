@@ -21,7 +21,7 @@ module Receipts
 
       define_grid(columns: 10, rows: 10, gutter: 10)
 
-      company = attributes.fetch(:company)
+      company ||= attributes.fetch(:company)
 
       render_company company: company
       header
@@ -48,7 +48,7 @@ module Receipts
       end
     end
 
-    def render_company(company: {})
+    def render_company(company:)
       logo = company[:logo]
 
       grid(0, 0).bounding_box do
