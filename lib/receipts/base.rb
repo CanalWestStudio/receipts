@@ -49,13 +49,13 @@ module Receipts
     def header(company: {})
       logo = company[:logo]
 
-      if logo.present?
+      unless logo.nil?
         grid(0, 0).bounding_box do
           image load_image(logo), width: 36, position: :left
         end
       end
 
-      if company.present?
+      unless company.nil?
         grid([0, 1], [0, 10]).bounding_box do
           render_billing_details company: company
         end
