@@ -22,13 +22,13 @@ module Receipts
       define_grid(columns: 10, rows: 10, gutter: 10)
 
       company ||= attributes.fetch(:company)
+      render_company(company: company) if company.present?
 
-      render_company company: company unless company.nil?
       header
       render_details attributes.fetch(:details)
       render_shipping_details recipient: attributes.fetch(:recipient)
       render_line_items attributes.fetch(:line_items)
-      render_footer
+      render_footer attributes.fetch(:footer)
     end
 
     def setup_fonts(custom_font = nil)
@@ -51,8 +51,10 @@ module Receipts
     def render_company(company:)
       logo = company[:logo]
 
-      grid(0, 0).bounding_box do
-        image load_image(logo), width: 36, position: :left
+      if logo.present?
+        grid(0, 0).bounding_box do
+          image load_image(logo), width: 36, position: :left
+        end
       end
 
 
@@ -114,8 +116,8 @@ module Receipts
       text message, inline_format: true
     end
 
-    def default_message(company:)
-      "For questions, contact us anytime at <color rgb='326d92'><link href='mailto:#{company.fetch(:email)}?subject=Question about my receipt'><b>#{company.fetch(:email)}</b></link></color>."
+    def default_message
+      ""
     end
   end
 end
