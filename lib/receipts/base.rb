@@ -93,12 +93,12 @@ module Receipts
 
       recipients.each do |recipient|
         grid([0, 1], [0, 3]).bounding_box do
-          render_shipping_details_line_item recipient: recipient
+          render_shipping_details_line_item(recipient) if recipient.present?
         end
       end
     end
 
-    def render_shipping_details_line_item(recipient:)
+    def render_shipping_details_line_item(recipient)
       line_items = [
         [
           {content: Array(recipient).join("\n"), padding: [0, 12, 2, 0]}
