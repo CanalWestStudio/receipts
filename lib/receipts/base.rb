@@ -108,8 +108,8 @@ module Receipts
         cells.padding = 6
         cells.borders = []
 
-        column.last.style(align: :right)
-        column.last.width = 80
+        column(-1).style(align: :right)
+        column(-1).width = 80
         row(0..borders).borders = [:bottom]
       end
     end
