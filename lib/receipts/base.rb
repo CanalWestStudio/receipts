@@ -89,7 +89,7 @@ module Receipts
     end
 
     def render_shipping_details(recipients, margin_top: 32)
-      margin_top
+      move_down margin_top
 
       # line_items = [
       #   [
