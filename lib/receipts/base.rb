@@ -25,7 +25,7 @@ module Receipts
       render_company(company: company) if company.present?
 
       recipients = attributes.fetch(:recipients)
-      render_shipping_details(recipients: recipients) if recipients.any?
+      render_shipping_details(recipients) if recipients.any?
 
       header
       render_details attributes.fetch(:details)
@@ -72,6 +72,7 @@ module Receipts
 
     def render_details(details, margin_top: 16)
       move_down margin_top
+
       table(details, cell_style: {borders: [], inline_format: true, padding: [0, 36, 2, 0]})
     end
 
@@ -90,30 +91,27 @@ module Receipts
       table(line_items, width: bounds.width, cell_style: {borders: [], inline_format: true, overflow: :expand})
     end
 
-    def render_shipping_details(recipients:, margin_top: 16)
+    def render_shipping_details(recipients, margin_top: 16)
       move_down margin_top
 
-      grid([0, 1], [0, 9]).bounding_box do
-        render_recipients recipients: recipients
+      recipients.each do |recipient|
+
+        render_shipping_details_line_item(recipient)
+
       end
     end
 
-    def render_recipients(recipients:)
-      recipients.each do |recipient|
-        grid([0, 1], [0, 3]).bounding_box do
-          render_shipping_details_line_item(recipient)
-        end
-      end
-    end
 
     def render_shipping_details_line_item(recipient)
+      move_down
+
       line_items = [
         [
           {content: Array(recipient).join("\n"), padding: [0, 12, 2, 0]}
         ]
       ]
      
-      table(line_items, cell_style: {borders: [], inline_format: true, padding: [0, 24, 2, 0]})
+      table(line_items, cell_style: {borders: [], inline_format: true, padding: [0, 24, 2, 0]}, width: 120)
     end
 
     def render_line_items(line_items, margin_top: 16)
