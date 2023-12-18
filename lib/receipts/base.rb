@@ -97,7 +97,7 @@ module Receipts
       #   ]
       # ]
 
-      table(recipients, cell_style: {borders: [], inline_format: true, padding: [0, 24, 2, 0]})
+      table(recipients, cell_style: {borders: [], inline_format: true, padding: [0, 24, 2, 0]}, width: 140)
     end
 
     def render_line_items(line_items, margin_top: 32)
