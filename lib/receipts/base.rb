@@ -70,7 +70,7 @@ module Receipts
 
     def render_details(details, margin_top: 32)
       move_down margin_top
-      table(details, cell_style: {borders: [], inline_format: true, padding: [0, 24, 2, 0]})
+      table(details, cell_style: {borders: [], inline_format: true, padding: [0, 48, 2, 0]})
     end
 
     def render_billing_details(company:, margin_top: 4)
@@ -97,7 +97,7 @@ module Receipts
       #   ]
       # ]
 
-      table(recipients, cell_style: {borders: [], inline_format: true, padding: [0, 48, 2, 0]})
+      table(recipients, cell_style: {borders: [], inline_format: true, padding: [0, 24, 2, 0]})
     end
 
     def render_line_items(line_items, margin_top: 32)
@@ -109,7 +109,7 @@ module Receipts
         cells.borders = []
 
         column(-1).min_width = 120
-        column(-1).style style_options: { align: :right }
+        column(-1).style style_options: { position: :right }
 
         row(0..borders).borders = [:bottom]
       end
