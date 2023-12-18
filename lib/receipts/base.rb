@@ -68,7 +68,7 @@ module Receipts
       text subtitle, style: :normal, size: 12 if subtitle.present?
     end
 
-    def render_details(details, margin_top: 16)
+    def render_details(details, margin_top: 32)
       move_down margin_top
       table(details, cell_style: {borders: [], inline_format: true, padding: [0, 24, 2, 0]})
     end
@@ -88,7 +88,7 @@ module Receipts
       table(line_items, width: bounds.width, cell_style: {borders: [], inline_format: true, overflow: :expand})
     end
 
-    def render_shipping_details(recipients, margin_top: 16)
+    def render_shipping_details(recipients, margin_top: 32)
       margin_top
 
       # line_items = [
@@ -100,7 +100,7 @@ module Receipts
       table(recipients, cell_style: {borders: [], inline_format: true, padding: [0, 48, 2, 0]})
     end
 
-    def render_line_items(line_items, margin_top: 16)
+    def render_line_items(line_items, margin_top: 32)
       move_down margin_top
 
       borders = line_items.length - 2
@@ -115,7 +115,7 @@ module Receipts
       end
     end
 
-    def render_footer(message, margin_top: 30)
+    def render_footer(message, margin_top: 32)
       margin_top
 
       render_footer_stroke if message.present?
@@ -124,11 +124,10 @@ module Receipts
     end
 
     def render_footer_stroke
-      move_down 60
+      move_down 32
 
       stroke do
         line_width 1
-        move_down 30
         stroke_color 'd4d4d4'
         stroke_horizontal_rule
       end
