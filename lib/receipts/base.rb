@@ -103,7 +103,7 @@ module Receipts
         ]
       ]
      
-      table(line_items, cell_style: {borders: [], inline_format: true, padding: [0, 24, 2, 0]}, width: 180)
+      table(line_items, cell_style: {borders: [], inline_format: true, padding: [0, 24, 2, 0]}, width: 40)
     end
 
     def render_line_items(line_items, margin_top: 16)
@@ -114,7 +114,7 @@ module Receipts
         cells.padding = 6
         cells.borders = []
 
-        # column(-1).width = 8
+        column(-1).min_width = 120
         # column(-1).style(align: :right)
 
         row(0..borders).borders = [:bottom]
