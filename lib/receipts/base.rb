@@ -103,11 +103,13 @@ module Receipts
 
 
     def render_shipping_details_line_item(recipient)
+      recipient_details = Array(recipient).join("\n")
+
       move_down
 
       line_items = [
         [
-          {content: Array(recipient).join("\n"), padding: [0, 12, 2, 0]}
+          {content: "#{recipient_details}", padding: [0, 12, 2, 0]}
         ]
       ]
      
