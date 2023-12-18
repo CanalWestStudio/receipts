@@ -88,7 +88,7 @@ module Receipts
       table(line_items, width: bounds.width, cell_style: {borders: [], inline_format: true, overflow: :expand})
     end
 
-    def render_shipping_details(recipients, margin_top: 32)
+    def render_shipping_details(recipients, margin_top: 24)
       move_down margin_top
 
       # line_items = [
