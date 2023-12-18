@@ -100,19 +100,13 @@ module Receipts
       table(recipients, column_widths: {0 => 180, 1 => 180, 2 => 180}, cell_style: {borders: [], inline_format: true, padding: [0, 24, 2, 0]})
     end
 
-    def render_line_items(line_items, margin_top: 32)
+    def render_line_items(line_items, margin_top: 30)
       move_down margin_top
 
       borders = line_items.length - 2
-      table(line_items, width: bounds.width, cell_style: {border_color: "e5e5e5", inline_format: true}) do
+      table(line_items, width: bounds.width, cell_style: {border_color: "eeeeee", inline_format: true}) do
         cells.padding = 6
         cells.borders = []
-
-        # column(0..-1).max_width = 120
-
-        # column(-1).max_width = 4
-        # column(-1).style style_options: { align: :center }
-
         row(0..borders).borders = [:bottom]
       end
     end
