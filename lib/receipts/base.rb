@@ -95,14 +95,12 @@ module Receipts
       move_down margin_top
 
       recipients.each do |recipient|
-
-        render_shipping_details_line_item(recipient)
-
+        render_shipping_details_line_item(recipient: recipient)
       end
     end
 
 
-    def render_shipping_details_line_item(recipient)
+    def render_shipping_details_line_item(recipient:)
       recipient_details = Array(recipient).join("\n")
 
       move_down
