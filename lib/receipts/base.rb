@@ -24,7 +24,7 @@ module Receipts
       company ||= attributes.fetch(:company)
       render_company(company: company) if company.present?
 
-      recipients = attributes.fetch(:recipients)
+      recipients ||= attributes.fetch(:recipients)
       render_shipping_details(recipients) if recipients.any?
 
       header
