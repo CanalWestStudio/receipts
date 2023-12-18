@@ -26,7 +26,7 @@ module Receipts
 
       header
       render_details attributes.fetch(:details)
-      render_recipients attributes.fetch(:recipients)
+      render_shipping_details recipient: attributes.fetch(:recipient)
       render_line_items attributes.fetch(:line_items)
       render_footer attributes.fetch(:footer)
     end
@@ -88,22 +88,16 @@ module Receipts
       table(line_items, width: bounds.width, cell_style: {borders: [], inline_format: true, overflow: :expand})
     end
 
-    def render_recipients(recipients, margin_top: 16)
+    def render_shipping_details(recipient:, margin_top: 16)
       margin_top
 
-      recipients.each do |recipient|
-        render_shipping_details(recipient: recipient)
-      end
-    end
-
-    def render_shipping_details(recipient:)
       line_items = [
         [
-          {content: Array(recipient).join("\n"), padding: [0, 12, 2, 0]}
+          {content: Array("#{recipient}").join("\n"), padding: [0, 12, 2, 0]}
         ]
       ]
      
-      table(line_items, cell_style: {borders: [], inline_format: true, padding: [0, 24, 2, 0]}, width: 40)
+      table(line_items, cell_style: {borders: [], inline_format: true, padding: [0, 24, 2, 0]})
     end
 
     def render_line_items(line_items, margin_top: 16)
@@ -115,7 +109,7 @@ module Receipts
         cells.borders = []
 
         column(-1).min_width = 120
-        # column(-1).style(align: :right)
+        column(-1).style style_options: { align: :right }
 
         row(0..borders).borders = [:bottom]
       end
