@@ -107,6 +107,10 @@ module Receipts
       table(line_items, width: bounds.width, cell_style: {border_color: "eeeeee", inline_format: true}) do
         cells.padding = 6
         cells.borders = []
+
+        column(0).max_width = 320
+        column(-1).style align: :right
+
         row(0..borders).borders = [:bottom]
       end
     end
