@@ -108,7 +108,7 @@ module Receipts
         cells.padding = 6
         cells.borders = []
 
-        column(0..-1).min_width = 60
+        column(0..-1).min_width = 120
         column(0).max_width = 180
         column(-1).style align: :right
 
