@@ -109,7 +109,7 @@ module Receipts
         cells.borders = []
 
         column(0..-1).min_width = 120
-        column(0).max_width = 180
+        column(0..-1).max_width = 180
         column(-1).style align: :right
 
         row(0..borders).borders = [:bottom]
