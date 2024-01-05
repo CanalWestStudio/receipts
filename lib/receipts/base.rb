@@ -25,10 +25,11 @@ module Receipts
       render_company(company: company) if company.present?
 
       header
-      render_details attributes.fetch(:details)
+      # render_details attributes.fetch(:details)
       render_shipping_details attributes.fetch(:recipients)
       render_line_items attributes.fetch(:line_items)
-      render_footer attributes.fetch(:footer)
+      # render_packages attributes.fetch(:packages)
+      # render_footer attributes.fetch(:footer)
     end
 
     def setup_fonts(custom_font = nil)
@@ -108,8 +109,20 @@ module Receipts
         cells.padding = 6
         cells.borders = []
 
-        column(0).width = 320
+        column(0).width = 280
         column(-1).style align: :right
+
+        row(0..borders).borders = [:bottom]
+      end
+    end
+
+    def render_packages(packages, margin_top: 30)
+      move_down margin_top
+
+      borders = packages.length - 2
+      table(packages, width: bounds.width/2, cell_style: {border_color: "eeeeee", inline_format: true}) do
+        cells.padding = 6
+        cells.borders = []
 
         row(0..borders).borders = [:bottom]
       end
