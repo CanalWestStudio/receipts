@@ -25,11 +25,11 @@ module Receipts
       render_company(company: company) if company.present?
 
       header
-      # render_details attributes.fetch(:details)
+      render_details attributes.fetch(:details)
       render_shipping_details attributes.fetch(:recipients)
       render_line_items attributes.fetch(:line_items)
-      # render_packages attributes.fetch(:packages)
-      # render_footer attributes.fetch(:footer)
+      render_packages attributes.fetch(:packages)
+      render_footer attributes.fetch(:footer)
     end
 
     def setup_fonts(custom_font = nil)
