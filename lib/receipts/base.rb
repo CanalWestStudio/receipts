@@ -1,6 +1,6 @@
 module Receipts
   class Base < Prawn::Document
-    attr_accessor :title, :subtitle, :company
+    attr_accessor :title, :subtitle, :company, :line_items, :sub_line_items
 
     class << self
       attr_reader :title, :subtitle
@@ -22,13 +22,16 @@ module Receipts
       define_grid(columns: 10, rows: 10, gutter: 10)
 
       company ||= attributes.fetch(:company)
+      line_items ||= attributes.fetch(:line_items)
+      sub_line_items ||= attributes.fetch(:sub_line_items)
+
       render_company(company: company) if company.present?
 
       header
       render_details attributes.fetch(:details)
       render_shipping_details attributes.fetch(:recipients)
-      render_line_items attributes.fetch(:line_items)
-      render_sub_line_items attributes.fetch(:sub_line_items)
+      render_line_items
+      render_sub_line_items if sub_line_items.present?
       render_footer attributes.fetch(:footer)
     end
 
@@ -116,7 +119,7 @@ module Receipts
       end
     end
 
-    def render_sub_line_items(sub_line_items, margin_top: 30)
+    def render_sub_line_items(sub_line_items:, margin_top: 30)
       move_down margin_top
 
       borders = sub_line_items.length - 2
