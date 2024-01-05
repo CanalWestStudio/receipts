@@ -22,7 +22,6 @@ module Receipts
       define_grid(columns: 10, rows: 10, gutter: 10)
 
       company ||= attributes.fetch(:company)
-      line_items ||= attributes.fetch(:line_items)
       sub_line_items ||= attributes.fetch(:sub_line_items)
 
       render_company(company: company) if company.present?
@@ -30,8 +29,8 @@ module Receipts
       header
       render_details attributes.fetch(:details)
       render_shipping_details attributes.fetch(:recipients)
-      render_line_items
-      render_sub_line_items if sub_line_items.present?
+      render_line_items attributes.fetch(:line_items)
+      render_sub_line_items(sub_line_items: sub_line_items) if sub_line_items.present?
       render_footer attributes.fetch(:footer)
     end
 
