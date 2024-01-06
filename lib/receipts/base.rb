@@ -30,7 +30,7 @@ module Receipts
       render_details attributes.fetch(:details)
       render_shipping_details attributes.fetch(:recipients)
       render_line_items attributes.fetch(:line_items)
-      render_sub_line_items(sub_line_items: sub_line_items) if sub_line_items.present?
+      render_sub_line_items(sub_line_items) if sub_line_items.present?
       render_footer attributes.fetch(:footer)
     end
 
@@ -118,8 +118,10 @@ module Receipts
       end
     end
 
-    def render_sub_line_items(sub_line_items:, margin_top: 30)
+    def render_sub_line_items(sub_line_items, margin_top: 30)
       move_down margin_top
+
+      text "Packages", style: :bold, size: 8
 
       borders = sub_line_items.length - 2
       table(sub_line_items, width: bounds.width/2, cell_style: {border_color: "eeeeee", inline_format: true}) do
