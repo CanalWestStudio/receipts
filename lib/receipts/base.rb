@@ -71,11 +71,6 @@ module Receipts
       text subtitle, style: :normal, size: 12 if subtitle.present?
     end
 
-    def render_details(details, margin_top: 32)
-      move_down margin_top
-      table(details, cell_style: {borders: [], inline_format: true, padding: [0, 48, 2, 0]})
-    end
-
     def render_billing_details(company:, margin_top: 4)
       company_details = [
         company[:address],
@@ -88,7 +83,14 @@ module Receipts
           {content: "<b>#{company.fetch(:name)}</b>\n#{company_details}", padding: [0, 12, 2, 12]}
         ]
       ]
-      table(line_items, width: bounds.width, cell_style: {borders: [], inline_format: true, overflow: :expand})
+      table(line_items, width: bounds.width, cell_style: {border_color: "cccccc", inline_format: true, overflow: :expand})
+    end
+
+    def render_details(details, margin_top: 32)
+      move_down margin_top
+      table(details, cell_style: {borders: [], inline_format: true, padding: [0, 48, 2, 0]}) do
+        cells.padding = 6
+      end
     end
 
     def render_shipping_details(recipients, margin_top: 24)
@@ -100,7 +102,9 @@ module Receipts
       #   ]
       # ]
 
-      table(recipients, column_widths: {0 => 180, 1 => 180, 2 => 180}, cell_style: {border_color: "cccccc", inline_format: true, padding: [0, 24, 2, 0]})
+      table(recipients, column_widths: {0 => 180, 1 => 180, 2 => 180}, cell_style: {border_color: "cccccc", inline_format: true, padding: [0, 24, 2, 0]}) do
+        cells.padding = 6
+      end
     end
 
     def render_line_items(line_items, margin_top: 30)
