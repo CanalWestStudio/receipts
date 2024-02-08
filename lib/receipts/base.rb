@@ -83,7 +83,7 @@ module Receipts
           {content: "<b>#{company.fetch(:name)}</b>\n#{company_details}", padding: [0, 12, 2, 12]}
         ]
       ]
-      table(line_items, width: bounds.width, cell_style: {border_color: "cccccc", inline_format: true, overflow: :expand})
+      table(line_items, width: bounds.width, cell_style: {borders: [], inline_format: true, overflow: :expand})
     end
 
     def render_details(details, margin_top: 32)
