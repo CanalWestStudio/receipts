@@ -132,7 +132,7 @@ module Receipts
       end
     end
 
-    def render_footer(message, margin_top: 32)
+    def render_footer(message, margin: 4, margin_top: 32)
       margin_top
 
       render_footer_stroke if message.present?
