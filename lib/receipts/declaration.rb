@@ -24,7 +24,7 @@ module Receipts
     def render_footer(message, margin_top: 32)
       margin_top
 
-      vertical_line 100, 300, :at => 25
+      vertical_line 0, bounds.top
 
       render_footer_stroke if message.present?
       indent(6, 6) do
