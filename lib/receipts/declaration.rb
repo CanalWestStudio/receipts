@@ -25,9 +25,8 @@ module Receipts
       margin_top
 
       if message.present?
-        move_down 32
-        vertical_line y, bounds.top - 48, at: 0
-        vertical_line y, bounds.top - 48, at: bounds.width
+        vertical_line y, bounds.top - 50, at: 0
+        vertical_line y, bounds.top - 50, at: bounds.width
         render_footer_stroke
         move_down 30
       end
