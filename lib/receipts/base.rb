@@ -135,15 +135,11 @@ module Receipts
     end
 
     def render_footer_stroke
-      move_down 32
-
       stroke do
         line_width 1
         stroke_color 'd4d4d4'
         stroke_horizontal_rule
       end
-
-      move_down 30
     end
 
     def default_message
