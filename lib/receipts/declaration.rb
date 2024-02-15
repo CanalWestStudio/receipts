@@ -24,8 +24,8 @@ module Receipts
     def render_footer(message)
       if message.present?
         # move_down 32
-        vertical_line y, bounds.top - 54, at: 0
-        vertical_line y, bounds.top - 54, at: bounds.width
+        vertical_line y + 30, bounds.top - 55, at: 0
+        vertical_line y + 30, bounds.top - 55, at: bounds.width
         render_footer_stroke
         move_down 30
       end
