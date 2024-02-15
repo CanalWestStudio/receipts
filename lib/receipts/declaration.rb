@@ -18,7 +18,7 @@ module Receipts
       render_footer attributes.fetch(:footer)
 
       stroke do
-        rectangle [bounds.left, bounds.top - 200], bounds.width, bounds.top - 200
+        rectangle [bounds.left, bounds.top - 20], bounds.width, bounds.top - 20
       end
     end
 
