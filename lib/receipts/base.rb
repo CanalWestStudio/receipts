@@ -32,8 +32,6 @@ module Receipts
       render_line_items attributes.fetch(:line_items)
       render_sub_line_items(sub_line_items) if sub_line_items.present?
       render_footer attributes.fetch(:footer)
-
-      stroke_bounds
     end
 
     def setup_fonts(custom_font = nil)
