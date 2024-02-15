@@ -88,7 +88,7 @@ module Receipts
 
     def render_details(details, margin_top: 32)
       move_down margin_top
-      table(details, cell_style: {border_color: "cccccc", inline_format: true, padding: [2, 48, 2, 2]})
+      table(details, width: bounds.width, cell_style: {border_color: "cccccc", inline_format: true, padding: [2, 48, 2, 2]})
     end
 
     def render_shipping_details(recipients, margin_top: 24)
@@ -100,7 +100,7 @@ module Receipts
       #   ]
       # ]
 
-      table(recipients, column_widths: {0 => 180, 1 => 180, 2 => 180}, cell_style: {border_color: "cccccc", inline_format: true, padding: [2, 24, 2, 2]})
+      table(recipients, column_widths: {0 => 180, 1 => 180, 2 => 180}, cell_style: {inline_format: true, padding: [2, 24, 2, 2]})
     end
 
     def render_line_items(line_items, margin_top: 30)
@@ -132,7 +132,7 @@ module Receipts
       end
     end
 
-    def render_footer(message, margin: 4, margin_top: 32)
+    def render_footer(message, margin_top: 32)
       margin_top
 
       render_footer_stroke if message.present?
