@@ -14,10 +14,10 @@ module Receipts
   @@default_font = nil
 
   # Customize the default font hash
-  # default_font = {
-  #   bold: "path/to/font",
-  #   normal: "path/to/font",
-  # }
+  default_font = {
+    bold: Rails.root.join('app/assets/fonts/Inter-Bold.ttf'),
+    normal: Rails.root.join('app/assets/fonts/Inter-Regular.ttf')
+  }
   def self.default_font=(path)
     @@default_font = path
   end
