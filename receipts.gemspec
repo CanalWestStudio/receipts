@@ -28,6 +28,6 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "prawn", "~> 0.2.4"
+  spec.add_dependency "prawn", "~> 2.4.0"
   spec.add_dependency "prawn-table", "~> 0.2.1"
 end
