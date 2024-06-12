@@ -1,7 +1,7 @@
 require "receipts/version"
 require "open-uri"
 require "prawn"
-require "prawn/table"
+# require "prawn/table"
 
 module Receipts
   autoload :Base, "receipts/base"

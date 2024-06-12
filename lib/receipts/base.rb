@@ -35,10 +35,10 @@ module Receipts
     end
 
     def setup_fonts(custom_font = nil)
-      # if !!custom_font
-      #   font_families.update "Primary" => custom_font
-      #   font "Primary"
-      # end
+      if !!custom_font
+        font_families.update "Primary" => custom_font
+        font "Primary"
+      end
 
       font_size 8
     end
