@@ -130,6 +130,7 @@ module Receipts
         lines = []
         lines << data[:name] if data[:name]
         lines << data[:address] if data[:address]
+        lines << data[:address2] if data[:address2]
         lines << data[:city_state_zip] if data[:city_state_zip]
         lines << data[:country] if data[:country]
         lines << data[:phone] if data[:phone]
@@ -147,6 +148,38 @@ module Receipts
         lines << "Tax ID/VAT: #{company[:tax_id]}" if company[:tax_id]
         lines << "EORI: #{company[:eori]}" if company[:eori]
         lines.join("\n")
+      end
+
+      def build_company_letterhead(company)
+        lines = []
+        lines << "<b>#{company[:name]}</b>" if company[:name]
+        lines << company[:address] if company[:address]
+        lines << company[:city_state_zip] if company[:city_state_zip]
+        lines << company[:phone] if company[:phone]
+        lines << company[:email] if company[:email]
+        lines.join("\n")
+      end
+
+      # Letterhead rendering with logo support
+      def render_letterhead(company:, logo: nil)
+        if logo && File.exist?(logo)
+          # Two-column layout: logo on left, company info on right
+          table([
+            [
+              {content: image(logo, width: 60, height: 60), borders: [], padding: [0, 10, 0, 0]},
+              {content: build_company_letterhead(company), borders: [], padding: [0, 0, 0, 10], inline_format: true}
+            ]
+          ],
+          width: bounds.width,
+          column_widths: [80, bounds.width - 80]) do
+            cells.borders = []
+          end
+        else
+          # Company info only, left-aligned
+          text build_company_letterhead(company), align: :left, inline_format: true
+        end
+
+        move_down 15
       end
     end
   end

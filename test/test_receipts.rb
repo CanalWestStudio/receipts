@@ -119,11 +119,11 @@ class TestReceipts < Minitest::Test
     )
   end
 
-  def test_certificate_of_origin_with_arguments
+    def test_certificate_of_origin_with_arguments
     assert_instance_of Receipts::CertificateOfOrigin, Receipts::CertificateOfOrigin.new(
-             certifier: {
-         certifier_type: "Exporter"
-       },
+      certifier: {
+        certifier_type: "Exporter"
+      },
       blanket_period: "1/1/2024 - 12/31/2024",
       exporter_details: {
         name: "ABC Manufacturing Corp",
@@ -140,26 +140,58 @@ class TestReceipts < Minitest::Test
         phone: "555-987-6543",
         tax_id: "98-7654321"
       },
-             items: [
-         {
-           sku: "PROD-001-BLU",
-           hs_code: "8421.39",
-           origin_criterion: "A",
-           country_of_origin: "US",
-           description: "Industrial filtration equipment for automotive applications"
-         },
-         {
-           sku: "PROD-002-RED",
-           hs_code: "8409.91",
-           origin_criterion: "B",
-           country_of_origin: "US",
-           description: "Engine components and spare parts for industrial machinery"
-         }
-       ],
+      items: [
+        {
+          sku: "PROD-001-BLU",
+          hs_code: "8421.39",
+          origin_criterion: "A",
+          country_of_origin: "US",
+          description: "Industrial filtration equipment for automotive applications"
+        },
+        {
+          sku: "PROD-002-RED",
+          hs_code: "8409.91",
+          origin_criterion: "B",
+          country_of_origin: "US",
+          description: "Engine components and spare parts for industrial machinery"
+        }
+      ],
       certification: {
         signature_name: "Jane Smith",
         signature_date: "March 15, 2024"
       }
+    )
+  end
+
+  def test_packing_list_with_arguments
+    assert_instance_of Receipts::PackingList, Receipts::PackingList.new(
+      company: {
+        name: "ABC Manufacturing Corp",
+        address: "123 Industrial Blvd Suite 100",
+        city_state_zip: "Springfield IL 62701 USA",
+        phone: "555-123-4567",
+        email: "shipping@abcmfg.com"
+      },
+      record_number: "1884",
+      shipping_details: {
+        order_date: "May 22, 2025",
+        shipping_method: "FedEx Ground",
+        dimensions: "33.0 x 12.0 x 16.0 in",
+        weight: "28.0 lb"
+      },
+      shipping_address: {
+        name: "Flynn Canada - Halifax",
+        address: "123 Main Street",
+        address2: "25 Neptune Crescent",
+        city_state_zip: "Dartmouth NS B2Y 4P9 CAN",
+        phone: "(902) 468-6313"
+      },
+      items: [
+        {
+          description: "AdvanQuick VEE2 Single Bead Applicator - Yoked Handles",
+          quantity: "4"
+        }
+      ]
     )
   end
 end
