@@ -55,6 +55,9 @@ module Receipts
 
       # Certification section
       render_certification_section(certification: certification)
+
+      # Add page numbers
+      add_page_numbers
     end
 
     private
@@ -267,8 +270,31 @@ module Receipts
         move_down 10
       end
 
-      if certification[:disclaimer]
-        text certification[:disclaimer], size: 6
+      # Store disclaimer for bottom placement
+      @disclaimer = certification[:disclaimer] if certification[:disclaimer]
+    end
+
+    def add_page_numbers
+      # Add page numbers to all pages
+      string = "Page <page> of <total>"
+      options = {
+        at: [bounds.right - 100, bounds.bottom - 10],
+        width: 100,
+        align: :right,
+        size: 8
+      }
+      number_pages string, options
+
+      # Add disclaimer at bottom if present
+      add_bottom_disclaimer if @disclaimer
+    end
+
+    def add_bottom_disclaimer
+      # Position disclaimer at bottom left of page
+      repeat :all do
+        bounding_box([bounds.left, bounds.bottom + 30], width: bounds.width - 110, height: 20) do
+          text @disclaimer, size: 6, overflow: :shrink_to_fit
+        end
       end
     end
 
