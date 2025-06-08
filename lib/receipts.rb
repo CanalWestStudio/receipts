@@ -5,6 +5,7 @@ require "prawn/table"
 
 module Receipts
   autoload :Base, "receipts/base"
+  autoload :CommercialInvoice, "receipts/commercial_invoice"
   autoload :Invoice, "receipts/invoice"
   autoload :PackingList, "receipts/packing_list"
   autoload :Receipt, "receipts/receipt"
