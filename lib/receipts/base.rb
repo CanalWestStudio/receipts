@@ -1,16 +1,17 @@
 module Receipts
   class Base < Prawn::Document
-    attr_accessor :title, :company
+    attr_accessor :title, :subtitle, :company, :line_items, :sub_line_items
 
     class << self
-      attr_reader :title
+      attr_reader :title, :subtitle
     end
 
     def initialize(attributes = {})
-      super(page_size: attributes.delete(:page_size) || "LETTER")
+      super page_size: attributes.delete(:page_size) || "LETTER"
       setup_fonts attributes.fetch(:font, Receipts.default_font)
 
       @title = attributes.fetch(:title, self.class.title)
+      @subtitle = attributes.fetch(:subtitle, self.class.subtitle)
 
       generate_from(attributes)
     end
@@ -18,15 +19,19 @@ module Receipts
     def generate_from(attributes)
       return if attributes.empty?
 
-      company = attributes.fetch(:company)
-      header company: company, height: attributes.fetch(:logo_height, 16)
-      render_details attributes.fetch(:details)
-      render_billing_details company: company, recipient: attributes.fetch(:recipient)
-      render_line_items(
-        line_items: attributes.fetch(:line_items),
-        column_widths: attributes[:column_widths]
-      )
-      render_footer attributes.fetch(:footer, default_message(company: company))
+      define_grid(columns: 10, rows: 10, gutter: 10)
+
+      company ||= attributes.fetch(:company)
+      sub_line_items ||= attributes[:sub_line_items]
+
+      render_company(company: company) if company.present?
+
+      header
+      render_details(attributes[:details] || [])
+      render_shipping_details(attributes[:recipients] || []) if attributes[:recipients].present?
+      render_line_items(attributes[:line_items] || [])
+      render_sub_line_items(sub_line_items) if sub_line_items.present?
+      render_footer(attributes[:footer] || "")
     end
 
     def setup_fonts(custom_font = nil)
@@ -46,64 +51,99 @@ module Receipts
       end
     end
 
-    def header(company: {}, height: 16)
+    def render_company(company:)
       logo = company[:logo]
 
-      if logo.nil?
-        text company.fetch(:name), align: :right, style: :bold, size: 16, color: "4b5563"
-      else
-        image load_image(logo), height: height, position: :right
+      if logo.present?
+        grid(0, 0).bounding_box do
+          image load_image(logo), width: 36, position: :left
+        end
       end
 
-      move_up height
-      text title, style: :bold, size: 16
+
+      grid([0, 1], [0, 10]).bounding_box do
+        render_billing_details company: company
+      end
     end
 
-    def render_details(details, margin_top: 16)
-      move_down margin_top
-      table(details, cell_style: {borders: [], inline_format: true, padding: [0, 8, 2, 0]})
+    def header
+      text title, style: :normal, size: 16, leading: 4
+      text subtitle, style: :normal, size: 12 if subtitle.present?
     end
 
-    def render_billing_details(company:, recipient:, margin_top: 16, display_values: nil)
-      move_down margin_top
-
-      display_values ||= company.fetch(:display, [:address, :phone, :email])
-      company_details = company.values_at(*display_values).compact.join("\n")
+    def render_billing_details(company:, margin_top: 4)
+      company_details = [
+        company[:address],
+        company[:phone],
+        company[:email]
+      ].compact.join("\n")
 
       line_items = [
         [
-          {content: "<b>#{company.fetch(:name)}</b>\n#{company_details}", padding: [0, 12, 0, 0]},
-          {content: Array(recipient).join("\n"), padding: [0, 12, 0, 0]}
+          {content: "<b>#{company.fetch(:name)}</b>\n#{company_details}", padding: [0, 12, 2, 12]}
         ]
       ]
       table(line_items, width: bounds.width, cell_style: {borders: [], inline_format: true, overflow: :expand})
     end
 
-    def render_line_items(line_items:, margin_top: 30, column_widths: nil)
+    def render_details(details, margin_top: 32)
+      move_down margin_top
+      table(details, width: bounds.width, cell_style: {border_color: "cccccc", inline_format: true, padding: [2, 48, 2, 2]})
+    end
+
+    def render_shipping_details(recipients, margin_top: 24)
+      move_down margin_top
+
+      table(recipients, column_widths: {0 => 180, 1 => 180, 2 => 180}, cell_style: {border_color: "cccccc", inline_format: true, padding: [2, 24, 2, 2]})
+    end
+
+    def render_line_items(line_items, margin_top: 30)
       move_down margin_top
 
       borders = line_items.length - 2
-
-      table_options = {
-        width: bounds.width,
-        cell_style: {border_color: "eeeeee", inline_format: true},
-        column_widths: column_widths
-      }.compact
-
-      table(line_items, table_options) do
+      table(line_items, width: bounds.width, cell_style: {border_color: "eeeeee", inline_format: true}) do
         cells.padding = 6
         cells.borders = []
+
+        column(0).max_width = 240
+        column(-1).style align: :right
+
         row(0..borders).borders = [:bottom]
       end
     end
 
-    def render_footer(message, margin_top: 30)
+    def render_sub_line_items(sub_line_items, margin_top: 30)
       move_down margin_top
+
+      text "Packages", style: :bold, size: 8
+
+      borders = sub_line_items.length - 2
+      table(sub_line_items, width: bounds.width/2, cell_style: {border_color: "eeeeee", inline_format: true}) do
+        cells.padding = 6
+        cells.borders = []
+
+        row(0..borders).borders = [:bottom]
+      end
+    end
+
+    def render_footer(message, margin_top: 32)
+      margin_top
+
+      render_footer_stroke if message.present?
+
       text message, inline_format: true
     end
 
-    def default_message(company:)
-      "For questions, contact us anytime at <color rgb='326d92'><link href='mailto:#{company.fetch(:email)}?subject=Question about my receipt'><b>#{company.fetch(:email)}</b></link></color>."
+    def render_footer_stroke
+      stroke do
+        line_width 1
+        stroke_color 'd4d4d4'
+        stroke_horizontal_rule
+      end
+    end
+
+    def default_message
+      ""
     end
   end
 end
