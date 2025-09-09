@@ -75,7 +75,7 @@ module Receipts
     def render_title_section(record_number:)
       text title, style: :bold, size: 16, align: :left
       move_down 5
-      text "Invoice #{record_number}", size: 12, align: :left if record_number && !record_number.empty?
+      text "#{record_number}", size: 12, align: :left if record_number && !record_number.empty?
       move_down 20
     end
 
