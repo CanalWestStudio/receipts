@@ -12,6 +12,8 @@ module Receipts
 
       @title = attributes.fetch(:title, self.class.title)
       @subtitle = attributes.fetch(:subtitle, self.class.subtitle)
+      @company = attributes[:company]
+      @sub_line_items = attributes[:sub_line_items]
 
       generate_from(attributes)
     end
@@ -21,16 +23,21 @@ module Receipts
 
       define_grid(columns: 10, rows: 10, gutter: 10)
 
-      company ||= attributes.fetch(:company)
-      sub_line_items ||= attributes[:sub_line_items]
+      @company ||= attributes.fetch(:company)
+      @sub_line_items ||= attributes[:sub_line_items]
 
-      render_company(company: company) if company.present?
+      # Support both logo as part of company hash and as top-level parameter
+      if attributes[:logo] && @company
+        @company = @company.merge(logo: attributes[:logo])
+      end
+
+      render_company(company: @company) if @company.present?
 
       header
       render_details(attributes[:details] || [])
       render_shipping_details(attributes[:recipients] || []) if attributes[:recipients].present?
       render_line_items(attributes[:line_items] || [])
-      render_sub_line_items(sub_line_items) if sub_line_items.present?
+      render_sub_line_items(@sub_line_items) if @sub_line_items.present?
       render_footer(attributes[:footer] || "")
     end
 
