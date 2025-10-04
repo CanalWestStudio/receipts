@@ -92,10 +92,7 @@ module Receipts
                       false
                     end
 
-      # Determine if we have a valid QR code to display
-      has_qr_code = qr_code && qr_code.is_a?(Hash) && qr_code[:png]
-
-      if has_qr_code
+      if valid_qr_code?(qr_code)
         # Render using float to position QR code on right
         float do
           bounding_box([bounds.width - 90, cursor], width: 90, height: 100) do
@@ -197,6 +194,10 @@ module Receipts
       end
 
       move_down 8
+    end
+
+    def valid_qr_code?(qr_code)
+      qr_code.present? && qr_code.is_a?(Hash) && qr_code[:png].present?
     end
   end
 end
