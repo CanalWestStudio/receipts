@@ -4,6 +4,7 @@ module Receipts
 
     class << self
       attr_reader :title, :subtitle
+      attr_reader :title, :subtitle
     end
 
     def initialize(attributes = {})
@@ -11,6 +12,7 @@ module Receipts
       setup_fonts attributes.fetch(:font, Receipts.default_font)
 
       @title = attributes.fetch(:title, self.class.title)
+      @subtitle = attributes.fetch(:subtitle, self.class.subtitle)
       @subtitle = attributes.fetch(:subtitle, self.class.subtitle)
 
       generate_from(attributes)
