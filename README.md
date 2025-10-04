@@ -16,11 +16,15 @@ gem 'receipts'
 
 And then execute:
 
-    $ bundle
+```sh
+$ bundle
+```
 
 Or install it yourself as:
 
-    $ gem install receipts
+```sh
+$ gem install receipts
+```
 
 ## Usage
 
@@ -103,6 +107,8 @@ You can pass the following options to generate a PDF:
     logo: "https://www.ruby-lang.org/images/header-ruby-logo@2x.png" # Downloaded with OpenURI
     ```
 
+  * `display: []` - Customize the company details rendered. By default, renders `[:address, :phone, :email]` under the company name. Items in the array should be Symbols matching keys in the `company` hash to be displayed.
+
 * `details` - Array of details about the Receipt, Invoice, Statement. Typically, this is receipt numbers, issue date, due date, status, etc.
 
 * `line_items` - Array of line items to be displayed in table format.
@@ -124,14 +130,32 @@ Here's an example of where each option is displayed.
 
 ![options](examples/images/options.jpg)
 
+#### Line Items Table - Column Widths
+
+You may set an option to configure the line items table's columns width in order to accommodate shortcomings of Prawn's width guessing ability to render header and content reasonably sized.
+The configuration depends on your line item column count and follows the prawn/table configuration as documented [here](https://prawnpdf.org/prawn-table-manual.pdf):
+
+This will size the second column to 400 and the fourth column to 50.
+
+```ruby
+column_widths: {1 => 400,3 => 50 }
+```
+
+This will set all column widths, considering your table has 4 columns.
+
+```ruby
+column_widths: [100, 200, 240]
+```
+
+If not set, it will fall back to Prawn's default behavior.
+
 ### Formatting
 
 `details` and `line_items` allow inline formatting with Prawn. This allows you to use HTML tags to format text: `<b>` `<i>` `<u>` `<strikethrough>` `<sub>` `<sup>` `<font>` `<color>` `<link>`
 
-See [the Prawn docs](https://prawnpdf.org/api-docs/2.3.0/Prawn/Text.html#text-instance_method) for more information.
+See [the Prawn docs](https://prawnpdf.org/) for more information.
 
-
-##### Page Size
+#### Page Size
 
 You can specify a different page size by passing in the `page_size` keyword argument:
 
@@ -169,7 +193,7 @@ You can also use the Receipts helpers in your custom PDFs at the current cursor 
 
 ```ruby
 receipt.text("Custom header")
-receipt.render_line_items([
+receipt.render_line_items(line_items: [
   ["my line items"]
 ])
 receipt.render_footer("This is a custom footer using the Receipts helper")
@@ -216,7 +240,7 @@ class ChargesController < ApplicationController
       @charge = current_user.charges.find(params[:id])
     end
 
-  	def send_pdf
+    def send_pdf
       # Render the PDF in memory and send as the response
       send_data @charge.receipt.render,
         filename: "#{@charge.created_at.strftime("%Y-%m-%d")}-gorails-receipt.pdf",
@@ -312,9 +336,8 @@ Receipts::Statement.new(
 
 ## Contributing
 
-1. Fork it ( https://github.com/excid3/receipts/fork )
+1. Fork it [https://github.com/excid3/receipts/fork](https://github.com/excid3/receipts/fork)
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
-
