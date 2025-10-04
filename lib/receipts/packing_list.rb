@@ -97,8 +97,8 @@ module Receipts
         float do
           bounding_box([bounds.width - 90, cursor], width: 90, height: 100) do
             png_data = qr_code[:png].to_blob
-            image StringIO.new(png_data), width: 70, height: 70, position: :right
-            move_down 3
+            image StringIO.new(png_data), width: 50, height: 50, position: :right
+            move_down 2
 
             # Use custom label if provided, otherwise default
             qr_label = qr_code[:label] || Defaults::SCAN_LABEL
