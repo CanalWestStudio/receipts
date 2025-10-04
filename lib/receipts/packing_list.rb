@@ -46,7 +46,8 @@ module Receipts
       return if attributes.empty?
 
       company = attributes.fetch(:company, {})
-      logo = attributes[:logo]
+      # Support both logo as top-level parameter and as part of company hash
+      logo = attributes[:logo] || company[:logo]
       record_number = attributes.fetch(:record_number, "")
       shipping_details = attributes.fetch(:shipping_details, {})
       shipping_address = attributes.fetch(:shipping_address, {})

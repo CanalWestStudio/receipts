@@ -162,22 +162,32 @@ module Receipts
 
       # Letterhead rendering with logo support
       def render_letterhead(company:, logo: nil)
-        if logo && File.exist?(logo)
-          # Two-column layout: logo on left, company info on right
-          table([
-            [
-              {content: image(logo, width: 60, height: 60), borders: [], padding: [0, 10, 0, 0]},
-              {content: build_company_letterhead(company), borders: [], padding: [0, 0, 0, 10], inline_format: true}
-            ]
-          ],
-          width: bounds.width,
-          column_widths: [80, bounds.width - 80]) do
-            cells.borders = []
+        # Check if logo exists (either as local file or URL)
+        logo_exists = if logo
+          if logo.start_with?("http")
+            true  # Assume URL is valid
+          else
+            File.exist?(logo)
           end
         else
-          # Company info only, left-aligned
-          text build_company_letterhead(company), align: :left, inline_format: true
+          false
         end
+
+        if logo && logo_exists
+          # Render logo on its own row above company info
+          begin
+            # Logo left-aligned on its own row
+            image load_image(logo), fit: [120, 30], position: :left
+          rescue => e
+            # Fallback: render text instead of image if loading fails
+            text "LOGO", size: 12, align: :left, style: :bold
+          end
+
+          move_down 5
+        end
+
+        # Company info (always rendered, with or without logo)
+        text build_company_letterhead(company), align: :left, inline_format: true
 
         move_down 15
       end
