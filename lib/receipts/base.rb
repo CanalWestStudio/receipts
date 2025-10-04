@@ -4,6 +4,7 @@ module Receipts
 
     class << self
       attr_reader :title, :subtitle
+      attr_reader :title, :subtitle
     end
 
     def initialize(attributes = {})
